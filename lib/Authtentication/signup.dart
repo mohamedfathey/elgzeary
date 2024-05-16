@@ -33,12 +33,13 @@ class _SigUpScreenState extends State<SigUpScreen> {
                 ),
 
                 Container(
-                  margin: EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(8),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Color.fromARGB(255, 211, 139, 13).withOpacity(.2)),
+                      color: const Color.fromARGB(255, 211, 139, 13)
+                          .withOpacity(.2)),
                   child: TextFormField(
                     controller: username,
                     validator: (value) {
@@ -62,7 +63,8 @@ class _SigUpScreenState extends State<SigUpScreen> {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Color.fromARGB(255, 211, 139, 13).withOpacity(.2)),
+                      color: const Color.fromARGB(255, 211, 139, 13)
+                          .withOpacity(.2)),
                   child: TextFormField(
                     controller: password,
                     validator: (value) {
@@ -73,7 +75,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
                     },
                     obscureText: !isVisiable,
                     decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        icon: const Icon(Icons.lock),
                         border: InputBorder.none,
                         hintText: "Password",
                         suffixIcon: IconButton(
@@ -95,7 +97,8 @@ class _SigUpScreenState extends State<SigUpScreen> {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Color.fromARGB(255, 211, 139, 13).withOpacity(.2)),
+                      color: const Color.fromARGB(255, 211, 139, 13)
+                          .withOpacity(.2)),
                   child: TextFormField(
                     controller: confirmPassword,
                     validator: (value) {
@@ -108,7 +111,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
                     },
                     obscureText: !isVisiable,
                     decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        icon: const Icon(Icons.lock),
                         border: InputBorder.none,
                         hintText: "confirm Password",
                         suffixIcon: IconButton(
@@ -128,7 +131,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
                     width: MediaQuery.of(context).size.width * .9,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Color.fromARGB(255, 155, 101, 7)),
+                        color: const Color.fromARGB(255, 155, 101, 7)),
                     child: TextButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
@@ -153,7 +156,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
                               MaterialPageRoute(
                                   builder: (context) => const LoginScreen()));
                         },
-                        child: Text("LOG IN"))
+                        child: const Text("LOG IN"))
                   ],
                 )
               ],

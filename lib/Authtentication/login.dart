@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Color.fromARGB(255, 211, 139, 13).withOpacity(.2)),
+                      color: const Color.fromARGB(255, 211, 139, 13).withOpacity(.2)),
                   child: TextFormField(
                     controller: username,
                     validator: (value) {
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Color.fromARGB(255, 211, 139, 13).withOpacity(.2)),
+                      color: const Color.fromARGB(255, 211, 139, 13).withOpacity(.2)),
                   child: TextFormField(
                     controller: password,
                     validator: (value) {
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     obscureText: !isVisiable,
                     decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        icon: const Icon(Icons.lock),
                         border: InputBorder.none,
                         hintText: "Password",
                         suffixIcon: IconButton(
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 // BUTTON ''''''''''''''''
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: MediaQuery.of(context).size.width * .9,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Color.fromARGB(255, 155, 101, 7)),
+                        color: const Color.fromARGB(255, 155, 101, 7)),
                     child: TextButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialPageRoute(
                                   builder: (context) => const SigUpScreen()));
                         },
-                        child: Text("SIGN UP"))
+                        child: const Text("SIGN UP"))
                   ],
                 )
               ]),
