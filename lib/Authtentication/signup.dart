@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_app_project/Authtentication/login.dart';
+import 'package:login_app_project/database/dbHandler.dart';
 
 class SigUpScreen extends StatefulWidget {
   const SigUpScreen({super.key});
@@ -13,13 +14,40 @@ class _SigUpScreenState extends State<SigUpScreen> {
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
   bool isVisiable = false;
-
   final formKey = GlobalKey<FormState>();
+
+  void handleSignUp() async {
+    if (formKey.currentState!.validate()) {
+      if (password.text == confirmPassword.text) {
+        int id = await DataBaseHandler().signUp(username.text, password.text);
+        if (id > 0) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Sign-up successful! Please log in.')));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Sign-up failed! Please try again.')));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Passwords do not match')));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage("lib/assets/main.png"),
+          fit: BoxFit.fill,
+        )),
         child: SingleChildScrollView(
           child: Form(
             key: formKey,
@@ -29,9 +57,8 @@ class _SigUpScreenState extends State<SigUpScreen> {
                 const ListTile(
                   title: Text("Register New Account",
                       style:
-                          TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 ),
-
                 Container(
                   margin: const EdgeInsets.all(8),
                   padding:
@@ -51,12 +78,11 @@ class _SigUpScreenState extends State<SigUpScreen> {
                     decoration: const InputDecoration(
                       icon: Icon(Icons.person),
                       border: InputBorder.none,
-                      hintText: "UserName",
+                      hintText: "Username",
                     ),
                   ),
                 ),
-
-                // PASSWORD !!!!!!!!!!!!!!!
+                // PASSWORD
                 Container(
                   margin: const EdgeInsets.all(8),
                   padding:
@@ -89,8 +115,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
                                 : Icons.visibility))),
                   ),
                 ),
-
-                // confirmation Password +-+-+-+-+--+---+-+--
+                // CONFIRM PASSWORD
                 Container(
                   margin: const EdgeInsets.all(8),
                   padding:
@@ -103,9 +128,9 @@ class _SigUpScreenState extends State<SigUpScreen> {
                     controller: confirmPassword,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "confirm Password is required";
+                        return "Confirm password is required";
                       } else if (password.text != confirmPassword.text) {
-                        return "password don't match";
+                        return "Passwords do not match";
                       }
                       return null;
                     },
@@ -113,7 +138,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
                     decoration: InputDecoration(
                         icon: const Icon(Icons.lock),
                         border: InputBorder.none,
-                        hintText: "confirm Password",
+                        hintText: "Confirm Password",
                         suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -125,7 +150,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
                                 : Icons.visibility))),
                   ),
                 ),
-
+                // SIGN UP BUTTON
                 Container(
                     height: 55,
                     width: MediaQuery.of(context).size.width * .9,
@@ -133,24 +158,18 @@ class _SigUpScreenState extends State<SigUpScreen> {
                         borderRadius: BorderRadius.circular(8),
                         color: const Color.fromARGB(255, 155, 101, 7)),
                     child: TextButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            // login method
-                          }
-                        },
-                        child: const Text("SIG UP",
+                        onPressed: handleSignUp,
+                        child: const Text("SIGN UP",
                             style: TextStyle(
                               color: Colors.white,
                             )))),
-
-                //SIGN UP BUTTON ********************
+                // LOGIN BUTTON
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Already have an account ?"),
                     TextButton(
                         onPressed: () {
-                          // navgator to sig in
                           Navigator.push(
                               context,
                               MaterialPageRoute(

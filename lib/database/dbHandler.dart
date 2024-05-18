@@ -2,13 +2,12 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:login_app_project/database/signUp.dart';
 
-class DataBaseHandller {
+class DataBaseHandler {
   static Database? _db;
   static const String DATABASE = "mydata.db";
   static const int VERSION = 1;
-  static const String AUTHTENTICATION_TABLE = "authtentication";
+  static const String AUTHENTICATION_TABLE = "authentication";
   static const String ID = "id";
   static const String USERNAME = "username";
   static const String PASSWORD = "password";
@@ -22,36 +21,30 @@ class DataBaseHandller {
     return _db!;
   }
 
-  _onCreate(Database db, int version) async {
+  Future<void> _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $AUTHTENTICATION_TABLE ($ID INTEGER PRIMARY KEY AUTOINCREMENT, $USERNAME TEXT, $PASSWORD TEXT)");
+        "CREATE TABLE $AUTHENTICATION_TABLE ($ID INTEGER PRIMARY KEY AUTOINCREMENT, $USERNAME TEXT, $PASSWORD TEXT)");
   }
 
-  _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    await db.execute("drop table $AUTHTENTICATION_TABLE");
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    await db.execute("DROP TABLE IF EXISTS $AUTHENTICATION_TABLE");
     await _onCreate(db, newVersion);
   }
 
-  Future<SignUp> signUP(SignUp signUp) async {
+  Future<int> signUp(String username, String password) async {
     Database dbClient = await db;
-    int id = await dbClient.insert(AUTHTENTICATION_TABLE, {
-      'id': signUp.id,
-      'username': signUp.username,
-      'password': signUp.password
-    });
-    signUp.id = id;
-    return signUp;
+    int id = await dbClient
+        .insert(AUTHENTICATION_TABLE, {USERNAME: username, PASSWORD: password});
+
+    return id;
   }
 
-  // Future<bool> authenticate(SignUp signUp) async {
-  //   Database dbClient = await db;
-  //   final authenticated = await db.query(AUTHTENTICATION_TABLE,
-  //       where: 'username = ? AND password = ?',
-  //       whereArgs: [signUp.username, signUp.password]);
-  //   if (authenticated.isNotEmpty) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  Future<bool> login(String username, String password) async {
+    Database dbClient = await db;
+    List<Map> result = await dbClient.query(AUTHENTICATION_TABLE,
+        where: '$USERNAME = ? AND $PASSWORD = ?',
+        whereArgs: [username, password]);
+    // print(result[0].toString());
+    return result.isNotEmpty;
+  }
 }
